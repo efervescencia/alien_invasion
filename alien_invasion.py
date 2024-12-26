@@ -79,6 +79,18 @@ class AlienInvasion:
     def _create_fleet(self):
         """Creamos un alien y después la flota"""
         alien = Alien(self)
+        alien_width = alien.rect.width
+        available_space_X = self.settings.screen_width - (alien_width * 2)
+        number_aliens_x = available_space_X // (alien_width * 2)
+
+        #Creamos la primera fila de aliens
+        for alien_number in range(number_aliens_x):
+            alien = Alien(self)
+            alien.x = alien_width + 2 * alien_width * alien_number
+            alien.rect.x = alien.x
+            self.aliens.add(alien)
+
+
         self.aliens.add(alien)
 
 
@@ -89,7 +101,7 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
-        
+
         pygame.display.flip()
 
 
