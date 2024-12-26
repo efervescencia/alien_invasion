@@ -31,6 +31,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
 
             #Hace visible los cambios de pantalla
@@ -103,6 +104,27 @@ class AlienInvasion:
         alien.rect.y = alien.y
 
         self.aliens.add(alien)
+
+    def _update_aliens(self):
+        """Comprobamos si algún alien esta en un borde,
+        después actualizamos la posición de todos los aliens"""
+        self._check_fleet_edges()
+        self.aliens.update()
+
+    def _check_fleet_edges(self):
+        """Responde adecuadamente si algún alien ha llegado a un borde"""
+        for alien in self.aliens.sprites():
+            if alien._check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        """Baja toda la flota y cambia su dirección"""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
+
+
 
     def _update_screen(self):
         # Redibuja la pantalla en cada paso por el bucle
