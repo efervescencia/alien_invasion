@@ -26,14 +26,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
-            self.bullets.update()
-
-            #Se eliminan las balas que salen de la pantalla
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
-            print(len(self.bullets))
-
+            self._update_bullets()
             self._update_screen()
 
             #Hace visible los cambios de pantalla
@@ -70,6 +63,14 @@ class AlienInvasion:
         if(len(self.bullets)) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+
+    def _update_bullets(self):
+        self.bullets.update()
+
+        # Se eliminan las balas que salen de la pantalla
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
 
     def _update_screen(self):
         # Redibuja la pantalla en cada paso por el bucle
