@@ -70,10 +70,6 @@ class AlienInvasion:
             self.bullets.add(new_bullet)
 
     def _update_bullets(self):
-        if not self.aliens:
-            #destruye las balas y crea una flota nueva
-            self.bullets.empty()
-            self._create_fleet()
 
         self.bullets.update()
 
@@ -82,8 +78,18 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        self._check_bullet_aliens_collision()
+        
+
+    def _check_bullet_aliens_collision(self):
         #buscamps los impactos de las balas en los aliens
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
+        if not self.aliens:
+            #destruye las balas y crea una flota nueva
+            self.bullets.empty()
+            self._create_fleet()
+
 
     def _create_fleet(self):
         """Creamos un alien y después la flota"""
