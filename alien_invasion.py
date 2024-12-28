@@ -79,7 +79,7 @@ class AlienInvasion:
                 self.bullets.remove(bullet)
 
         self._check_bullet_aliens_collision()
-        
+
 
     def _check_bullet_aliens_collision(self):
         #buscamps los impactos de las balas en los aliens
@@ -124,6 +124,10 @@ class AlienInvasion:
         después actualizamos la posición de todos los aliens"""
         self._check_fleet_edges()
         self.aliens.update()
+
+        #Busca colisiones alien-nave
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            print("Ship hit!!!")
 
     def _check_fleet_edges(self):
         """Responde adecuadamente si algún alien ha llegado a un borde"""
