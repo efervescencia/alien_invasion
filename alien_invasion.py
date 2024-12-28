@@ -70,6 +70,11 @@ class AlienInvasion:
             self.bullets.add(new_bullet)
 
     def _update_bullets(self):
+        if not self.aliens:
+            #destruye las balas y crea una flota nueva
+            self.bullets.empty()
+            self._create_fleet()
+
         self.bullets.update()
 
         # Se eliminan las balas que salen de la pantalla
