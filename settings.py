@@ -10,6 +10,7 @@ class Settings:
 
         #configuracion de la nave
         self.ship_speed = 2.5
+        self.ships_limit = 3
 
         #Configuración de las balas
         self.bullet_color = (60,60,60)

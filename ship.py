@@ -2,6 +2,8 @@ import  pygame
 
 class Ship:
     """Una clase para gestionar la nave"""
+
+
     def __init__(self, ai_game):
         """iniializo la nave y configuro su posicion inicial"""
         self.settings = ai_game.settings
@@ -22,9 +24,11 @@ class Ship:
         self.moving_right = False
         self.moving_left = False
 
+
     def blitme(self):
         """Dibuja la anve en su ubicacion actual"""
         self.screen.blit(self.image, self.rect)
+
 
     def update(self):
         if self.moving_right and self.rect.right < self.screen_rect.right:
@@ -34,3 +38,9 @@ class Ship:
 
         #actualizamos el objeto rect
         self.rect.x = self.x
+
+
+    def center_ship(self):
+        """Centra la nave en la pantalla"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
