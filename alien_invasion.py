@@ -35,9 +35,12 @@ class AlienInvasion:
         """Inicia el bucle principal del juego"""
         while True:
             self._check_events()
-            self.ship.update()
-            self._update_bullets()
-            self._update_aliens()
+
+            if self.stats.game_active:
+                self.ship.update()
+                self._update_bullets()
+                self._update_aliens()
+
             self._update_screen()
 
             #Hace visible los cambios de pantalla
@@ -131,15 +134,20 @@ class AlienInvasion:
         self._check_fleet_edges()
         self.aliens.update()
 
-        #Busca colisiones alien-nave
+        # Busca colisiones alien-nave
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
+        # Busca si algun alien ha llegado al fondo de la pantalla
+        self._check_aliens_bottom()
+
+
     def _check_fleet_edges(self):
         """Responde adecuadamente si algún alien ha llegado a un borde"""
         for alien in self.aliens.sprites():
             if alien._check_edges():
                 self._change_fleet_direction()
                 break
+
 
     def _change_fleet_direction(self):
         """Baja toda la flota y cambia su dirección"""
@@ -163,7 +171,10 @@ class AlienInvasion:
         """Responde al impacto de un alien con la nave"""
 
         # disminuimos una vida
-        self.stats.ships_left -= 1
+        if self.stats.ships_left >=1:
+            self.stats.ships_left -= 1
+        else:
+            self.stats.game_active = False
 
         # borramos aliens y balas
         self.aliens.empty()
@@ -175,6 +186,20 @@ class AlienInvasion:
 
         # una pausa para insultar al ordenador
         sleep(0.5)
+
+
+    def _check_aliens_bottom(self):
+        """Comprueba si algún alien ha llegado a la parte baja de la pantalla"""
+
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                # hacemos lo mismo que si hubiera impactado con la nave
+                self._ship_hit()
+                break
+
+
+
 
 
 # Crear una instancia del juego y ejecutarlo
