@@ -93,6 +93,7 @@ class AlienInvasion:
         # Restablecemos las estadisticas del juego
         self.stats.reset_stats()
         self.stats.game_active = True
+        self.settings.initialize_dynamic_settings()
 
         # eliminamos balas y aliens
         self.aliens.empty()
@@ -131,6 +132,7 @@ class AlienInvasion:
             #destruye las balas y crea una flota nueva
             self.bullets.empty()
             self._create_fleet()
+            self.settings.increase_speed()
 
 
     def _create_fleet(self):
