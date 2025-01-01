@@ -97,6 +97,7 @@ class AlienInvasion:
         self.stats.game_active = True
         self.sb.prep_score()
         self.sb.prep_level()
+        self.sb.prep_ships()
         self.settings.initialize_dynamic_settings()
 
         # eliminamos balas y aliens
@@ -227,8 +228,9 @@ class AlienInvasion:
         """Responde al impacto de un alien con la nave"""
 
         # disminuimos una vida
-        if self.stats.ships_left >=1:
+        if self.stats.ships_left >0:
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
         else:
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
